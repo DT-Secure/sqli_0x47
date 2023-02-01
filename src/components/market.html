@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0x47</title>
+</head>
+
+<body>
+    <script>
+        const id = new URLSearchParams(window.location.search).get("id");
+        let data = fetch(`http://127.0.0.1:3000/product?id=${id}`).then((res) => res.json()).then(async (data) => {
+            if (typeof data[0] === "undefind") {
+                console.log("404")
+            } else {
+                console.log(data[0])
+            }
+
+        });
+
+
+    </script>
+</body>
+
+</html>
