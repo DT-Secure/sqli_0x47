@@ -1,7 +1,12 @@
 import express, { Application, Request, Response } from 'express'
 import { database } from "./../database/main";
-let db = new database("127.0.0.1", 3366, "root", "qwerty")
-
+import { config } from 'dotenv'
+const env = config()
+const ip = env.parsed?.DATABASEHOST ?? "127.0.0.1"
+const port = env.parsed?.DATABASEPORTHOST ?? "3306"
+const user = env.parsed?.DATABASEUSER ?? "root"
+const password = env.parsed?.DATABASEPASSWORD ?? "qwerty"
+const db = new database(ip, parseInt(port), user, password)
 export class router {
     private app: Application
     private path: string
@@ -13,9 +18,9 @@ export class router {
 
 
     }
-    start_lab(port: number) {
-        this.app.listen(port)
-        console.log(`http:\\\\localhost:${port}`)
+    start_lab(ip: string, port: number) {
+        this.app.listen(port, ip)
+        console.log(`http:\\\\${ip}:${port}`)
     }
 
     start_router() {
