@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express'
 import { database } from "./../database/main";
 import { config } from 'dotenv'
+
 const env = config()
 const ip = env.parsed?.DATABASEHOST ?? "127.0.0.1"
 const port = env.parsed?.DATABASEPORTHOST ?? "3306"
@@ -10,14 +11,12 @@ const db = new database(ip, parseInt(port), user, password)
 export class router {
     private app: Application
     private path: string
-    constructor(app: Application, path: string) {
+    constructor(app: Application, _path: string) {
         this.app = app
-        this.path = path
-
+        this.path = _path
         this.start_router()
-
-
     }
+
     start_lab(ip: string, port: number) {
         this.app.listen(port, ip)
         console.log(`http:\\\\${ip}:${port}`)
@@ -58,10 +57,8 @@ export class router {
 
     }
     async login(req: Request, res: Response) {
-
         let { name, password } = req.body;
         try {
-
             let item = db.get_db().query(`SELECT * FROM sqli.admin WHERE name = "${name}" and password="${password}"`)
             if ((await item)[0] === undefined) {
                 return res.send("what is wrong ?")
