@@ -13,7 +13,7 @@ export class database {
             } finally {
                 if (this.conn) {
 
-                    console.log("DATABASE was connect")
+                    console.log("DATABASE connected")
 
                 } else {
                     console.error("fail")
@@ -23,10 +23,15 @@ export class database {
 
     }
     get_db(): PoolConnection {
-        if (typeof (this.conn) === "undefined") {
+        if (this.conn === undefined) {
             throw new Error("conn is undefined")
         } else {
             return this.conn
         }
+    }
+    was_connected(): boolean {
+
+        return this.conn !== undefined
+
     }
 }

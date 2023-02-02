@@ -22,7 +22,8 @@ export class router {
 
     start_lab(ip: string, port: number) {
         this.app.listen(port, ip)
-        console.log(`http:\\\\${ip}:${port}`)
+        console.log(`| http:\\\\${ip}:${port}`)
+
     }
 
     start_router() {
@@ -37,7 +38,7 @@ export class router {
         this.app.get("/product", this.get_product)
         this.app.get("/all_products", this.get_all_product)
         this.app.post("/login", express.urlencoded({ extended: true }), this.login)
-        console.log(`started the router`)
+        console.log(`| started the router`)
     }
     async get_all_product(req: Request, res: Response) {
         try {
