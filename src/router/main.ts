@@ -32,15 +32,12 @@ export class router {
             index: "index.html"
 
         }
-        console.log(this.path);
 
         this.app.use(express.static(this.path, options))
-
         this.app.get("/product", this.get_product)
         this.app.get("/all_products", this.get_all_product)
         this.app.post("/login", express.urlencoded({ extended: true }), this.login)
         console.log(`started the router`)
-
     }
     async get_all_product(req: Request, res: Response) {
         try {
