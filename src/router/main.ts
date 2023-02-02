@@ -3,11 +3,13 @@ import { database } from "./../database/main";
 import { config } from 'dotenv'
 
 const env = config()
-const ip = env.parsed?.DATABASEHOST ?? "127.0.0.1"
-const port = env.parsed?.DATABASEPORTHOST ?? "3306"
+const ipdb = env.parsed?.DATABASEHOST ?? "127.0.0.1"
+const portdb = env.parsed?.DATABASEPORTHOST ?? "3306"
 const user = env.parsed?.DATABASEUSER ?? "root"
 const password = env.parsed?.DATABASEPASSWORD ?? "qwerty"
-const db = new database(ip, parseInt(port), user, password)
+const db = new database(ipdb, parseInt(portdb), user, password)
+const port = env.parsed?.PORTHOST ?? "3000"
+const ip = env.parsed?.HOST ?? "127.0.0.1"
 export class router {
     private app: Application
     private path: string
@@ -15,6 +17,7 @@ export class router {
         this.app = app
         this.path = _path
         this.start_router()
+        this.start_lab(ip, parseInt(port))
     }
 
     start_lab(ip: string, port: number) {
@@ -23,18 +26,20 @@ export class router {
     }
 
     start_router() {
-        console.log(`started the router`)
         const options = {
             dotfiles: 'ignore',
             extensions: ['htm', 'html'],
             index: "index.html"
 
         }
+        console.log(this.path);
+
         this.app.use(express.static(this.path, options))
-        this.app.use(express.urlencoded({ extended: true }));
+
         this.app.get("/product", this.get_product)
         this.app.get("/all_products", this.get_all_product)
-        this.app.post("/login", this.login)
+        this.app.post("/login", express.urlencoded({ extended: true }), this.login)
+        console.log(`started the router`)
 
     }
     async get_all_product(req: Request, res: Response) {
