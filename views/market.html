@@ -5,17 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
     <title>0x47</title>
 </head>
+<h1 id="name"></h1>
+<h1 id="description"></h1>
+<img src="" alt="dsad" id="img">
+
 
 <body>
     <script>
+        let img = document.getElementById("img")
+        let name = document.getElementById("name")
+        let description = document.getElementById("description")
+
         const id = new URLSearchParams(window.location.search).get("id");
         let data = fetch(`http://127.0.0.1:3000/product?id=${id}`).then((res) => res.json()).then(async (data) => {
             if (typeof data[0] === "undefind") {
                 console.log("404")
             } else {
                 console.log(data[0])
+                img.src = data[0].image
+                name.innerText = data[0].name
+                description.innerText = data[0].desrciption
             }
 
         });
