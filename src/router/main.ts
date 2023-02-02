@@ -58,7 +58,11 @@ export class router {
         try {
 
             let item = db.get_db().query(`SELECT * FROM sqli.admin WHERE name = "${name}" and password="${password}"`)
-            res.send(await item)
+            if ((await item)[0] === undefined) {
+                return res.send("what is wrong ?")
+            }
+            let flag = "AX47(0d6dd6d1a01050a758fdcefd372eb9b0604debff3418d41821397f9bb0945bcf98bfdceb2f6191f7e06e2d4212a0b85ee1d03cfccaccb4a7f8ad299a08d0e785)"
+            return res.redirect(`/logined?this_is_fucking_flag=${flag}`)
         }
         catch {
             res.send("error")

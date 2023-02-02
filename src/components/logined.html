@@ -9,7 +9,16 @@
 </head>
 
 <body>
+    <h1 id="flag"></h1>
+    <script>
+        let h1 = document.getElementById('flag');
 
+        const id = new URLSearchParams(window.location.search).get("this_is_fucking_flag");
+        h1.innerText = id;
+        console.log(id);
+
+
+    </script>
 </body>
 
 </html>
